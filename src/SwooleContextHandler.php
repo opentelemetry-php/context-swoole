@@ -41,8 +41,7 @@ final class SwooleContextHandler
     public function splitOffChildCoroutines(): void
     {
         $pcid = Coroutine::getCid();
-        $clist = method_exists(Coroutine::class, 'list') ? Coroutine::list() : Coroutine::listCoroutines();
-        foreach ($clist as $cid) {
+        foreach (Coroutine::listCoroutines() as $cid) {
             if ($pcid === Coroutine::getPcid($cid) && !$this->isForked($cid)) {
                 $this->forkCoroutine($cid);
             }
